@@ -16,6 +16,7 @@ except Exception:
 
 #If it is the same date do not perform any operation
 if previousDate == today:
+    #Notify that password has already been generated
     ctypes.windll.user32.MessageBoxW(0,"Password already generated today!","Password Generator",0)
     pass
 else:
