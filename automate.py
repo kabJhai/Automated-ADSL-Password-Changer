@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys #Provide keys in keyboard
 import random #To generate random number
 from datetime import date
 today = str(date.today()) #Get todays date
+import ctypes #For popup window
 
 previousDate = ""
 #Make sure the file exists
@@ -15,6 +16,7 @@ except Exception:
 
 #If it is the same date do not perform any operation
 if previousDate == today:
+    ctypes.windll.user32.MessageBoxW(0,"Password already generated today!","Password Generator",0)
     pass
 else:
     #Create the instance of firefox driver
@@ -50,8 +52,9 @@ else:
     f.write("Password : "+str(password))
     #Close the file
     f.close()
-
-    #Create or edit a file named 'date'
+    #Popup to show todays password
+    ctypes.windll.user32.MessageBoxW(0,"Todays password is :"+password,"Password Generator",1)
+    # #Create or edit a file named 'date'
     f = open('date','w')
     #Write todays date to it
     f.write(str(today))
