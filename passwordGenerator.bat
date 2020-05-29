@@ -1,1 +1,1 @@
-python "e:/Browser Automation/Firefox Automation/automate.py"
+python "[Full location to file]/automate.py"

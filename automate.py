@@ -1,32 +1,40 @@
 from selenium import webdriver #Web driver implementations
 from selenium.webdriver.common.keys import Keys #Provide keys in keyboard
+import random #To generate random number
 
 #Create the instance of firefox driver
+#You can call firefox or any other driver you have installed
 driver = webdriver.Firefox()
 
+#username
+username = "admin"
+
+#password
+adslPassword = "admin"
 #Navigate to a url
-driver.get("http://admin:admin@192.168.1.1/basic/home_wlan.htm")
+driver.get("http://"+username+":"+adslPassword+"@192.168.1.1/basic/home_wlan.htm")
 
 #Confirm the title
-assert "" in driver.title
+assert "" in driver.title #You can comment this out or change it to your title of the adsl
+
 #Access the element by name
 elem = driver.find_element_by_name("PreSharedKey")
-#Get access to previous passowrd in my case 49451583
-previous = elem.get_attribute('value')
-first = int(previous)//1000000
-if(first == 99):
-    new = str('00')
-else:
-    new = str(first+1)
-password = new + previous[2:]
-elem.clear()
-driver.switch_to_alert().accept()
+password = random.randint(100000000,999999999) #Generate new 9 digit random password
+#Send the password value to the input element
 elem.send_keys(password)
 
+#Access the save button
 saveButton = driver.find_element_by_name("SaveBtn")
+
+#Perform a click action
 saveButton.click()
 
+#Create or edit a file named 'Generated Password.txt'
 f = open('Generated Password.txt','w')
+#Write the new password to it
 f.write("Password : "+str(password))
+#Close the file
 f.close()
+
+#Close the driver
 driver.close()
